@@ -1,21 +1,21 @@
 
 ## Data Genaration
-1. Use cpp to construct a topological graph and original data. (out_with_state.txt)
+1. Use cpp(NOT uploaded) to construct a topological graph and original data. (data/out_with_state.txt)
 
 2. Run preprocess/origin_txt2json_with_state.py and preprocess/preprocess_with_state.py sequentially.
     The first file creates a file named data.json,
     and the second file creates preprocessed data: data/preprocessed_train_data.json and data/preprocessed_test_data.json.
     > Waring: Do NOT try reading these two BAD-SMELL files.
 
-3. **(Recommended)** See the preprocessed data (data/preprocessed_train_data.json and data/preprocessed_test_data.json) which will be loaded by Dataloader **directly**.
+3. **(Recommended: start from here)** See the preprocessed data (data/preprocessed_train_data.json and data/preprocessed_test_data.json) which will be loaded by Dataloader **directly**.
 
 (The preprocessed_{train/test}_data in this repo is fresh.)
 
 4.  Interpretation of the preprocessed data
 
     4.1 vocal.json
-        symbol(action)-id correspondence
-        final states' frequency statistics
+     + symbol(action)-id correspondence
+     + final states' frequency statistics
 
     4.2 data/preprocessed_{train/test}_data
     'seq': action(symbol) sequence (starting with [SEP] token)
@@ -38,7 +38,7 @@ e.g. python train.py --sup_case {0/1/2} --lr 1e-3 --nepoch 310 --batch_size 64
 
 + sup_case 
     + 0: ONLY supervise the final state
-    + 1: supervise states correspongding to the last frames
+    + 1: supervise states corresponding to the last frames of actions
     + 2: supervise all states
 
 ## Notice
@@ -49,5 +49,6 @@ e.g. python train.py --sup_case {0/1/2} --lr 1e-3 --nepoch 310 --batch_size 64
     + output_dim: dimension of the states
 
 2. which model to use?
-    decided by line 15 in train.py
+
+    Decided by line 15 in train.py:
     ("from model.prenorm_model import BERT" or "from model.model import BERT)
