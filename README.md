@@ -43,7 +43,7 @@ e.g. python train.py --sup_case {0/1/2} --lr 1e-3 --nepoch 310 --batch_size 64
 ## Notice
 1. post-norm model: model/model.py
    pre-norm model: model/prenorm_model.py
-   may need to adjust the following parameters in the model **manually** in model/model.py or model/prenorm_model.py
+   may need to adjust the following parameters in the model **manually** in model/model.py or model/prenorm_model.py:
     + maxlen: set the same as the "maxlen" in data/voal.json
     + output_dim: dimension of the states
 
