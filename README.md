@@ -12,6 +12,7 @@
 (The preprocessed_{train/test}_data in this repo is fresh.)
 
 4.  Interpretation of the preprocessed data
+
     4.1 vocal.json
         symbol(action)-id correspondence
         final states' frequency statistics
