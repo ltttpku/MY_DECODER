@@ -91,6 +91,7 @@ def train():
             optimizer.step()
 
             num_of_trans_states = sup_states_val.shape[1]
+            output_logits = output_logits.round()
             sup_logits = sup_logits.round()
             whole_accs = []
             for z in range(num_of_trans_states):
@@ -132,11 +133,16 @@ def train():
 
 
                         num_of_trans_states = sup_states_val.shape[1]
+                        output_logits = output_logits.round()
                         sup_logits = sup_logits.round()
                         whole_accs = []
                         for z in range(num_of_trans_states):
                             whole_acc = sum([torch.equal(sup_logits[i, z], sup_states_val[i, z]) for i in range(args.batch_size)]) / args.batch_size
                             whole_accs.append(whole_acc)
+
+                        # writer.add_scalar('test/loss', loss.item(), global_step)
+                        # for j in range(num_of_trans_states):
+                        #     writer.add_scalar(f'test/whole_acc_{j}', whole_accs[j], global_step)
 
                         test_whole_accs.append(whole_accs)
                         total_loss += loss
@@ -147,7 +153,6 @@ def train():
                 model.train()
 
                 writer.add_scalar('test/loss', test_loss.item(), global_step)
-                # writer.add_scalar('train/whole_acc', whole_acc, global_step)
                 for j in range(num_of_trans_states):
                     writer.add_scalar(f'test/whole_acc_{j}', test_whole_accs[j], global_step)
 
