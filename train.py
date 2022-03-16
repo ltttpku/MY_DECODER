@@ -131,7 +131,6 @@ def train():
                         else: # # 监督所有状态
                             loss = criterion(output_logits, all_states)
 
-
                         num_of_trans_states = sup_states_val.shape[1]
                         output_logits = output_logits.round()
                         sup_logits = sup_logits.round()
