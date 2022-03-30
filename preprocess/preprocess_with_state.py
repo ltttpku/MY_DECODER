@@ -1,4 +1,6 @@
-import json
+import json, os
+# os.chdir('..')
+print('cur dir:', os.getcwd())
 
 data_file_path="data/data.json"
 with open(data_file_path, 'r') as load_f:
@@ -20,10 +22,10 @@ for item in items:
         final_state_dct[end_state] = 1
 
 print(final_state_dct)
-maxlen += 1 # # [SEP]
+# maxlen += 1 # # [SEP]
 word_list = list(set(word_list))
 print(word_list)
-word2idx = {'[PAD]' : 0, '[SEP]' : 1}
+word2idx = {'[PAD]' : 0, }
 length_of_predefined_words = len(word2idx)
 for i, w in enumerate(word_list):
     word2idx[w] = i + length_of_predefined_words # # note
@@ -35,11 +37,11 @@ output_lst = []
 for item in items:
     tmp_dct = {}
     seq = item['seq'].split(' ')
-    tmp_dct['seq'] = [word2idx['[SEP]']] + [word2idx[word] for word in seq]
+    tmp_dct['seq'] = [word2idx[word] for word in seq]
     tmp_dct['seq'] += [word2idx['[PAD]']] * (maxlen - len(tmp_dct['seq']))
 
     segment = list(map(int , item['segment'].split(' ')))
-    tmp_dct['segment'] = [1] + [ i + 2 for i in segment]
+    tmp_dct['segment'] = [ i + length_of_predefined_words for i in segment]
     tmp_dct['segment'] += [word2idx['[PAD]']] * (maxlen - len(tmp_dct['segment']))
 
     tmp_dct['start_state'] = list(map(int, item['start_state'].split(' ')))
@@ -48,9 +50,13 @@ for item in items:
     tmp_dct['sup_states_val'] = []
     
     for key, val in sorted(item['sup_states'].items(), key= lambda kv:int(kv[0])):
-        tmp_dct['sup_states_idx'].append(int(key))
+        tmp_dct['sup_states_idx'].append(int(key)-1) # # 相对于输出序列
         tmp_dct['sup_states_val'].append(list(map(int, val.split(' '))))
     output_lst.append(tmp_dct)
+
+    # if len(item['sup_states']) <= 6:
+    #     import pdb
+    #     pdb.set_trace()
 
 # _len = len(tmp_dct['sup_states_idx'])
 # maxlen += pre_num_of_preprocessing

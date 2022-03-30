@@ -1,5 +1,5 @@
 import json, sys, os
-# sys.path.append(os.path.join(os.getcwd(), 'MY_BERT', 'preprocess'))
+sys.path.append(os.path.join(os.getcwd(), '..', 'preprocess'))
 
 lst = []
 with open('data/out_with_state.txt', 'r') as f:

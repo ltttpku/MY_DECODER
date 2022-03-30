@@ -6,7 +6,7 @@ import math
 
 # BERT Parameters
 maxlen = 150 # vocab.json:maxlen 
-# batch_size = 6
+output_dim = 7 # dim of states
 n_layers = 6
 n_heads = 12
 d_model = 768
@@ -127,9 +127,9 @@ class EncoderLayer(nn.Module):
         enc_outputs_5 = self.pos_ffn(LN_enc_outputs_4) # enc_outputs: [batch_size, seq_len, d_model]
         return enc_outputs_5 + enc_outputs_3
 
-class BERT(nn.Module):
+class BERT_casual_mask(nn.Module):
     def __init__(self):
-        super(BERT, self).__init__()
+        super(BERT_casual_mask, self).__init__()
         self.embedding = Embedding()
         self.layers = nn.ModuleList([EncoderLayer() for _ in range(n_layers)])
         self.fc = nn.Sequential(
@@ -138,7 +138,7 @@ class BERT(nn.Module):
             nn.Tanh(),
         )
         self.final_layernorm = nn.LayerNorm(d_model)
-        self.classifier = nn.Linear(d_model, 6)
+        self.classifier = nn.Linear(d_model, output_dim)
         # self.linear = nn.Linear(d_model, d_model)
         # self.activ2 = gelu
         # # fc2 is shared with embedding layer

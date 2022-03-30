@@ -6,7 +6,7 @@ import math
 
 # BERT Parameters
 maxlen = 121 # vocab.json:maxlen 
-output_dim = 6
+output_dim = 7 # dim of states
 n_layers = 6
 n_heads = 12
 d_model = 768
